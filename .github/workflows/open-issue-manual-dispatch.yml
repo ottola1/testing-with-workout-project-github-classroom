@@ -1,0 +1,22 @@
+# Using GITHUB_TOKEN
+
+name: Open a new issue
+
+on: workflow_dispatch
+
+jobs:
+  open-new-issue:
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      issues: write
+
+    steps:
+      - run: |
+          gh issue --repo ${{ github.repository }} \
+            create --title "Issue from job name ${{ github.job }}" \
+            -- body "${{ github.actor }} triggered the creation of this issue. GitHub bot created it for him."
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
