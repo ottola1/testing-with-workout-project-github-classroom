@@ -10,7 +10,7 @@ jobs:
 
     steps: 
       - name: Create a file
-        run: ehco "File contents from job 1" > from-another-job.txt
+        run: echo "File contents from job 1" > from-another-job.txt
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
