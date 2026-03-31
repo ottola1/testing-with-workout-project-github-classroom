@@ -1,0 +1,24 @@
+# Task 5 from Exercise 05 
+# passing a value to a later job by using outputs and needs
+
+name: Pass a value between jobs
+
+on: workflow_dispatch
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    # Map the step output to a job output
+    outputs:
+      my_value: ${{ steps.step1.outputs.test_output }}
+    steps:
+      - name: Create a value
+        id: step1
+        run: echo "test_output=Hello from Job 1" >> "$GITHUB_OUTPUT"
+
+  job2:
+    runs-on: ubuntu-latest
+    needs: job1 # Ensures job1 finishes first
+    steps:
+      - name: Use the value
+        run: echo "The value from job 1 is ${{ needs.job1.outputs.my_value }}"
